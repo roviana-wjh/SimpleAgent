@@ -122,6 +122,12 @@ type SessionContext struct {
 }
 ```
 
+**Context 压缩**：
+- 当消息数量超过 `CompressThreshold` 时自动压缩
+- 保留所有 `system` 消息（重要指令）
+- 保留最近的 N 条消息（N = CompressThreshold / 2）
+- 丢弃中间的历史消息，减少 Token 消耗
+
 #### 3. Tool System (`pkg/tools/`)
 
 **Tool 接口**：

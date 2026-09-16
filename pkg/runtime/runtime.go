@@ -76,8 +76,9 @@ func (rt *Runtime) Execute(ctx context.Context, sessionID string, userInput stri
 			Timestamp: time.Now(),
 		})
 
-		// 获取消息
-		messages := sessionCtx.GetMessages()
+		// 获取消息（应用 Context 压缩）
+		allMessages := sessionCtx.GetMessages()
+		messages := rt.compressMessages(allMessages)
 
 		// 准备 LLM 请求
 		tools := rt.toolRegistry.GetAll()
@@ -232,3 +233,41 @@ func (rt *Runtime) recordTrace(trace *Trace) {
 		_ = rt.tracer.Record(trace)
 	}
 }
+
+// compressMessages 压缩消息（保留 system 和最近的消息）
+func (rt *Runtime) compressMessages(messages []*Message) []*Message {
+	// 如果消息数量未超过阈值，直接返回
+	if len(messages) <= rt.config.CompressThreshold {
+		return messages
+	}
+
+	compressed := make([]*Message, 0)
+
+	// 1. 保留所有 system 消息
+	for _, msg := range messages {
+		if msg.Role == "system" {
+			compressed = append(compressed, msg)
+		}
+	}
+
+	// 2. 计算要保留的最近消息数量（保留一半）
+	keepRecent := rt.config.CompressThreshold / 2
+	if keepRecent < 5 {
+		keepRecent = 5 // 至少保留 5 条
+	}
+
+	// 3. 保留最近的消息
+	startIdx := len(messages) - keepRecent
+	if startIdx < 0 {
+		startIdx = 0
+	}
+
+	for i := startIdx; i < len(messages); i++ {
+		if messages[i].Role != "system" { // 避免重复添加 system 消息
+			compressed = append(compressed, messages[i])
+		}
+	}
+
+	return compressed
+}
+

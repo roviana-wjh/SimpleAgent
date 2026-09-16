@@ -4,13 +4,20 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"agent-runtime/pkg/runtime"
 )
 
 func main() {
-	// DeepSeek API Key
-	apiKey := "sk-7646c9243c5643d195212c5987695751"
+	// 从环境变量获取 API Key
+	apiKey := os.Getenv("DEEPSEEK_API_KEY")
+	if apiKey == "" {
+		log.Println("Error: DEEPSEEK_API_KEY environment variable not set")
+		log.Println("Please set it before running:")
+		log.Println("  export DEEPSEEK_API_KEY=\"your-api-key\"")
+		os.Exit(1)
+	}
 
 	// 创建 DeepSeek LLM 客户端
 	llmClient := runtime.NewDeepSeekClient(apiKey)

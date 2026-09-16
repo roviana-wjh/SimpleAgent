@@ -10,11 +10,13 @@ import (
 )
 
 func main() {
-	// 从环境变量获取 API Key，如果没有则使用默认值
+	// 从环境变量获取 API Key
 	apiKey := os.Getenv("DEEPSEEK_API_KEY")
 	if apiKey == "" {
-		apiKey = "sk-7646c9243c5643d195212c5987695751"
-		log.Println("Warning: DEEPSEEK_API_KEY not set, using hardcoded key")
+		log.Println("Error: DEEPSEEK_API_KEY environment variable not set")
+		log.Println("Please set it before running:")
+		log.Println("  export DEEPSEEK_API_KEY=\"your-api-key\"")
+		os.Exit(1)
 	}
 
 	fmt.Println("╔════════════════════════════════════════════════════════╗")
