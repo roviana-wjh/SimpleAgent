@@ -141,9 +141,37 @@ type Tool interface {
 ```
 
 **已实现的工具**：
-- **Calculator**: 数学表达式计算（真实实现）
-- **Search**: 搜索功能（Mock）
-- **Weather**: 天气查询（Mock）
+
+1. **Calculator（真实实现）** ✅
+   - 支持基本运算：+、-、*、/
+   - 支持运算符优先级（先乘除后加减）
+   - 自动处理除零等错误
+   - 示例：`"2+3"` → `"5.00"`，`"10*5/2"` → `"25.00"`
+
+2. **Search（真实实现 - DuckDuckGo）** ✅
+   - 使用 DuckDuckGo Instant Answer API
+   - 免费，无需 API Key
+   - 返回搜索摘要和相关话题
+   - 示例：`"Go语言教程"` → 返回真实搜索结果
+
+3. **Weather（真实实现 - OpenWeatherMap）** ✅
+   - 使用 OpenWeatherMap Current Weather API
+   - 需要免费 API Key（每天 1000 次免费）
+   - 返回温度、湿度、风速等信息
+   - 示例：`"北京"` → 返回真实天气数据
+
+**配置 Weather API Key**:
+```bash
+# 1. 注册免费 API Key: https://openweathermap.org/api
+# 2. 设置环境变量
+export OPENWEATHER_API_KEY="your-api-key-here"
+
+# 如果不设置，Weather 工具会返回友好提示
+```
+
+**测试工具 vs 真实工具**：
+- `CalculatorTool()` / `SearchTool()` / `WeatherTool()` - Fake 工具（测试用，返回固定值）
+- `RealCalculator()` / `RealSearch()` / `RealWeather()` - 真实工具（生产用，调用真实 API）
 
 #### 4. LLM 集成 (`pkg/runtime/deepseek_client.go`)
 

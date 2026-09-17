@@ -25,14 +25,10 @@ func main() {
 	// 创建工具注册表
 	toolRegistry := runtime.NewSimpleToolRegistry()
 
-	// 注册工具
-	calcTool := runtime.CalculatorTool()
-	searchTool := runtime.SearchTool()
-	weatherTool := runtime.WeatherTool()
-
-	toolRegistry.Register(calcTool)
-	toolRegistry.Register(searchTool)
-	toolRegistry.Register(weatherTool)
+	// 注册真实工具（替代 Fake 工具）
+	toolRegistry.Register(runtime.RealCalculator())
+	toolRegistry.Register(runtime.RealSearch())
+	toolRegistry.Register(runtime.RealWeather())
 
 	// 创建 Session Manager
 	sessionMgr := runtime.NewMemorySessionManager()

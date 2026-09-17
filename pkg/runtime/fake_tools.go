@@ -151,19 +151,36 @@ func (t *FakeTool) Reset() {
 	t.callCount = 0
 }
 
-// ============ 具体的 Fake Tool 实现 ============
+// ============ 具体的 Fake Tool 实现（用于测试）============
 
-// CalculatorTool Fake 计算器工具
+// CalculatorTool Fake 计算器工具（测试用）
 func CalculatorTool() *FakeTool {
 	return NewFakeTool("calculator", "4")
 }
 
-// SearchTool Fake 搜索工具
+// SearchTool Fake 搜索工具（测试用）
 func SearchTool() *FakeTool {
 	return NewFakeTool("search", "Found results: ...")
 }
 
-// WeatherTool Fake 天气工具
+// WeatherTool Fake 天气工具（测试用）
 func WeatherTool() *FakeTool {
 	return NewFakeTool("weather", "Sunny, 25°C")
+}
+
+// ============ 真实 Tool 创建函数（用于生产）============
+
+// RealCalculatorTool 真实计算器工具
+func RealCalculator() Tool {
+	return NewRealCalculatorTool()
+}
+
+// RealSearchTool 真实搜索工具
+func RealSearch() Tool {
+	return NewRealSearchTool()
+}
+
+// RealWeatherTool 真实天气工具
+func RealWeather() Tool {
+	return NewRealWeatherTool()
 }
