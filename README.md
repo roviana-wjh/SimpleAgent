@@ -18,9 +18,21 @@ go mod download
 ### 2. 配置 API Key
 
 ```bash
-# 设置 DeepSeek API Key（或其他兼容 OpenAI 格式的 LLM）
-export DEEPSEEK_API_KEY="your-api-key-here"
+# 方式 1: 设置环境变量（推荐）
+export DEEPSEEK_API_KEY="sk-your-api-key-here"
+
+# 方式 2: Windows PowerShell
+$env:DEEPSEEK_API_KEY="sk-your-api-key-here"
+
+# 方式 3: 直接在代码中设置（不推荐，仅用于测试）
+# 在 cmd/deepseek_demo/main.go 中修改 apiKey 变量
 ```
+
+**获取 DeepSeek API Key**：
+1. 访问 [DeepSeek 开放平台](https://platform.deepseek.com/)
+2. 注册并登录账号
+3. 在 API Keys 页面创建新的 API Key
+4. 复制 API Key（格式：`sk-xxxxxxxxxxxxxxxx`）
 
 ### 3. 运行示例
 

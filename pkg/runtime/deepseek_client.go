@@ -207,7 +207,7 @@ func (c *DeepSeekClient) Chat(ctx context.Context, req *ChatRequest) (*ChatRespo
 	if len(choice.Message.ToolCalls) > 0 {
 		resp.ToolCalls = make([]ToolCall, 0, len(choice.Message.ToolCalls))
 		for _, tc := range choice.Message.ToolCalls {
-			var params map[string]interface
+			var params map[string]interface{}
 			if err := json.Unmarshal([]byte(tc.Function.Arguments), &params); err != nil {
 				return nil, fmt.Errorf("failed to unmarshal tool call arguments: %w", err)
 			}

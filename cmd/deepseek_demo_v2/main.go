@@ -13,9 +13,13 @@ func main() {
 	// 从环境变量获取 API Key
 	apiKey := os.Getenv("DEEPSEEK_API_KEY")
 	if apiKey == "" {
-		log.Println("Error: DEEPSEEK_API_KEY environment variable not set")
-		log.Println("Please set it before running:")
-		log.Println("  export DEEPSEEK_API_KEY=\"your-api-key\"")
+		log.Println("❌ Error: DEEPSEEK_API_KEY environment variable not set")
+		log.Println("")
+		log.Println("Please set your DeepSeek API Key:")
+		log.Println("  Linux/Mac:   export DEEPSEEK_API_KEY=\"sk-your-api-key-here\"")
+		log.Println("  Windows:     $env:DEEPSEEK_API_KEY=\"sk-your-api-key-here\"")
+		log.Println("")
+		log.Println("Get your API Key at: https://platform.deepseek.com/")
 		os.Exit(1)
 	}
 

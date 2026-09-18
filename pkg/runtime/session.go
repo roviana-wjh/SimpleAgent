@@ -3,6 +3,7 @@ package runtime
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
@@ -156,6 +157,6 @@ func (m *MemorySessionManager) Delete(ctx context.Context, sessionID string) err
 
 // 辅助函数
 func generateID() string {
-	// 简单实现，实际应该使用 UUID
-	return fmt.Sprintf("session_%d", time.Now().UnixNano())
+	// 使用时间戳 + 随机数确保唯一性
+	return fmt.Sprintf("session_%d_%d", time.Now().UnixNano(), rand.Int63())
 }

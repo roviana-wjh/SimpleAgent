@@ -207,6 +207,11 @@ func (rt *Runtime) Execute(ctx context.Context, sessionID string, userInput stri
 				Role:    "tool",
 				Content: toolContent,
 				Name:    toolCall.Name,
+				ToolCalls: []ToolCall{
+					{
+						ID: toolCall.ID, // 必须包含 tool_call_id
+					},
+				},
 			}
 			sessionCtx.AddMessage(toolMsg)
 		}
